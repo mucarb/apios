@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.murilo.ordemservico.domain.Pessoa;
 import com.murilo.ordemservico.domain.Tecnico;
 
-public interface TecnicoRepository extends JpaRepository<Tecnico, Integer> {
+public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
 
-	@Query("SELECT obj FROM Tecnico obj WHERE obj.cpf = :cpf")
-	Tecnico findByCPF(@Param("cpf") String cpf);
+	@Query("SELECT obj FROM Pessoa obj WHERE obj.cpf = :cpf")
+	Pessoa findByCPF(@Param("cpf") String cpf);
 
 }

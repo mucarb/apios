@@ -2,6 +2,8 @@ package com.murilo.ordemservico.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.murilo.ordemservico.domain.Tecnico;
@@ -10,10 +12,15 @@ public class TecnicoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message = "Campo NOME deve ser preenchido!")
 	private String nome;
 	
 	@CPF
+	@NotEmpty(message = "Campo CPF deve ser preenchido!")
 	private String cpf;
+	
+	@NotEmpty(message = "Campo TELEFONE deve ser preenchido!")
 	private String telefone;
 	
 	public TecnicoDTO() {
