@@ -10,11 +10,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.murilo.ordemservico.services.exceptions.DataIntegrityViolationException;
 import com.murilo.ordemservico.services.exceptions.ObjectNotFoundException;
 
+/* classe com anotacao para interceptar excecoes, assim manipulando de acordo com o tipo de excecoes */
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
+	/* anotacao indicando que metodo manipulador de excecao */
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException e) {
+		/*
+		 * StandardError(<passando o momento do erro)>, <o status com valor inteiro da
+		 * requisicao em que se encontra o erro>, <mensagem do error: classe do
+		 * erro.getMessage()>)
+		 */
 		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
 				e.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);

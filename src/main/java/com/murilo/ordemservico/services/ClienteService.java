@@ -8,65 +8,65 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.murilo.ordemservico.domain.Cliente;
 import com.murilo.ordemservico.domain.Pessoa;
-import com.murilo.ordemservico.domain.Tecnico;
-import com.murilo.ordemservico.dtos.TecnicoDTO;
+import com.murilo.ordemservico.dtos.ClienteDTO;
+import com.murilo.ordemservico.repositories.ClienteRepository;
 import com.murilo.ordemservico.repositories.PessoaRepository;
-import com.murilo.ordemservico.repositories.TecnicoRepository;
 import com.murilo.ordemservico.services.exceptions.DataIntegrityViolationException;
 import com.murilo.ordemservico.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class TecnicoService {
+public class ClienteService {
 
 	@Autowired
-	private TecnicoRepository tecnicoRepository;
+	private ClienteRepository clienteRepository;
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
 	/*
-	 * Busca por id do Tecnico
+	 * Busca por id do Cliente
 	 */
-	public Tecnico findById(Integer id) {
+	public Cliente findById(Integer id) {
 		/*
-		 * Estanciando um para um tipo Optional<Tecnico> pois o objeto pode ou existir.
+		 * Estanciando um para um tipo Optional<Cliente> pois o objeto pode ou existir.
 		 * E retornando uma excecao personalida caso nao encontro o objeto com o ID
 		 * informado
 		 */
-		Optional<Tecnico> obj = tecnicoRepository.findById(id);
+		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Técnico: objeto não encontrado! ID: " + id + ", Tipo: " + Tecnico.class.getName()));
+				"Cliente: objeto não encontrado! ID: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	/*
-	 * Busca por todos os Tecnico na base de dados
+	 * Busca por todos os Cliente na base de dados
 	 */
-	public List<Tecnico> findAll() {
-		return tecnicoRepository.findAll();
+	public List<Cliente> findAll() {
+		return clienteRepository.findAll();
 	}
 
 	/*
-	 * Inclui um novo tecnico na base dados
+	 * Inclui um novo cliente na base dados
 	 */
-	public Tecnico create(TecnicoDTO objDto) {
+	public Cliente create(ClienteDTO objDto) {
 		if (findByCPF(objDto) != null) {
 			throw new DataIntegrityViolationException("CPF já cadastrado na base de dados!");
 		}
-		Tecnico newObj = new Tecnico(null, objDto.getNome(), objDto.getCpf(), objDto.getTelefone());
-		return tecnicoRepository.save(newObj);
+		Cliente newObj = new Cliente(null, objDto.getNome(), objDto.getCpf(), objDto.getTelefone());
+		return clienteRepository.save(newObj);
 	}
 
 	/*
-	 * Atualiza um tecnico na base dados
+	 * Atualiza um cliente na base dados
 	 */
-	public Tecnico update(Integer id, @Valid TecnicoDTO objDto) {
+	public Cliente update(Integer id, @Valid ClienteDTO objDto) {
 		/*
-		 * Verificando se existe o id do tecnico
+		 * Verificando se existe o id do cliente
 		 */
-		Tecnico oldObj = findById(id);
+		Cliente oldObj = findById(id);
 		/*
-		 * Verificando se ja existe outro Tecnico com o CPF a ser atualizado
+		 * Verificando se ja existe outro Cliente com o CPF a ser atualizado
 		 */
 		if (findByCPF(objDto) != null && findByCPF(objDto).getId() != id) {
 			throw new DataIntegrityViolationException("CPF já cadastrado na base de dados!");
@@ -76,20 +76,20 @@ public class TecnicoService {
 		oldObj.setCpf(objDto.getCpf());
 		oldObj.setTelefone(objDto.getTelefone());
 
-		return tecnicoRepository.save(oldObj);
+		return clienteRepository.save(oldObj);
 	}
 
 	public void delete(Integer id) {
-		Tecnico obj = findById(id);
+		Cliente obj = findById(id);
 
 		if (obj.getList().size() > 0) {
-			throw new DataIntegrityViolationException("Técnico possuí Ordem de Serviço, não pode ser deletado!");
+			throw new DataIntegrityViolationException("Cliente possuí Ordem de Serviço, não pode ser deletado!");
 		}
-		tecnicoRepository.deleteById(id);
+		clienteRepository.deleteById(id);
 	}
 
-	/* metodo para validacao do negocio, busca por Tecnico pelo CPF */
-	private Pessoa findByCPF(TecnicoDTO objDto) {
+	/* metodo para validacao do negocio, busca por Cliente pelo CPF */
+	private Pessoa findByCPF(ClienteDTO objDto) {
 		/* metodo findByCPF nao existe no repository */
 		Pessoa obj = pessoaRepository.findByCPF(objDto.getCpf());
 

@@ -6,10 +6,10 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.murilo.ordemservico.domain.Tecnico;
+import com.murilo.ordemservico.domain.Cliente;
 
 /* Classes Padrão DTO (Data Transfer Object). Utilizado para omitir dados das classes de dominio otimizando a informacao */
-public class TecnicoDTO implements Serializable {
+public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -24,11 +24,10 @@ public class TecnicoDTO implements Serializable {
 	@NotEmpty(message = "Campo TELEFONE deve ser preenchido!")
 	private String telefone;
 	
-	public TecnicoDTO() {
+	public ClienteDTO() {
 	}
 	
-	public TecnicoDTO(Tecnico obj) {
-		super();
+	public ClienteDTO(Cliente obj) {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.cpf = obj.getCpf();

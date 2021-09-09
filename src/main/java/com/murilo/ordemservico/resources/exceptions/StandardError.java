@@ -2,6 +2,7 @@ package com.murilo.ordemservico.resources.exceptions;
 
 import java.io.Serializable;
 
+/* classe como apoio para ResouceExceptionHandler */
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +14,6 @@ public class StandardError implements Serializable {
 	}
 
 	public StandardError(Long timestamp, Integer status, String error) {
-		super();
 		this.timestamp = timestamp;
 		this.status = status;
 		this.error = error;

@@ -18,49 +18,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.murilo.ordemservico.domain.Tecnico;
-import com.murilo.ordemservico.dtos.TecnicoDTO;
-import com.murilo.ordemservico.services.TecnicoService;
+import com.murilo.ordemservico.domain.Cliente;
+import com.murilo.ordemservico.dtos.ClienteDTO;
+import com.murilo.ordemservico.services.ClienteService;
 
 @RestController
-@RequestMapping(value = "/tecnicos")
-public class TecnicoResource {
+@RequestMapping(value = "/clientes")
+public class ClienteResource {
 	/*
-	 * Especificando um endpoint. Ex.: localhost:8080/tecnicos
+	 * Especificando um endpoint. Ex.: localhost:8080/clientes
 	 */
 	
 	@Autowired
-	private TecnicoService tecnicoService;
+	private ClienteService clienteService;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id) {
-		Tecnico obj = tecnicoService.findById(id);
-		TecnicoDTO objDto = new TecnicoDTO(obj);
+	public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id) {
+		Cliente obj = clienteService.findById(id);
+		ClienteDTO objDto = new ClienteDTO(obj);
 		return ResponseEntity.ok().body(objDto);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<TecnicoDTO>> findAll() {
-		/* conversao N formas da lista de Tecnico para TecnicoDTO */
-		
-		List<TecnicoDTO> listDto = tecnicoService.findAll().stream().map(obj -> new TecnicoDTO(obj))
+	public ResponseEntity<List<ClienteDTO>> findAll() {
+		/* conversao N formas da lista de Cliente para ClienteDTO */
+
+		List<ClienteDTO> listDto = clienteService.findAll().stream().map(obj -> new ClienteDTO(obj))
 				.collect(Collectors.toList());
 
-//		List<Tecnico> list = tecnicoService.findAll();
-//		List<TecnicoDTO> listDto = new ArrayList<>();
+//		List<Cliente> list = clienteService.findAll();
+//		List<ClienteDTO> listDto = new ArrayList<>();
 
-//		for (Tecnico obj : list) {
-//			listDto.add(new TecnicoDTO(obj));
+//		for (Cliente obj : list) {
+//			listDto.add(new ClienteDTO(obj));
 //		}
 
-//		list.forEach(obj -> listDto.add(new TecnicoDTO(obj)));
+//		list.forEach(obj -> listDto.add(new ClienteDTO(obj)));
 
 		return ResponseEntity.ok().body(listDto);
 	}
 
 	@PostMapping
-	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDto) {
-		Tecnico newObj = tecnicoService.create(objDto);
+	public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO objDto) {
+		Cliente newObj = clienteService.create(objDto);
 		
 		/* passando a uri de acesso do novo obj */
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
@@ -68,14 +68,14 @@ public class TecnicoResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO objDto) {
-		TecnicoDTO newObj = new TecnicoDTO(tecnicoService.update(id, objDto));
+	public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO objDto) {
+		ClienteDTO newObj = new ClienteDTO(clienteService.update(id, objDto));
 		return ResponseEntity.ok().body(newObj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
-		tecnicoService.delete(id);
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		clienteService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 

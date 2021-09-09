@@ -15,7 +15,6 @@ public class Cliente extends Pessoa implements Serializable {
 	private List<OrdemServico> list = new ArrayList<>();
 
 	public Cliente() {
-		super();
 	}
 
 	public Cliente(Integer id, String nome, String cpf, String telefone) {

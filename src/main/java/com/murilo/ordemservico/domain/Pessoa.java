@@ -12,11 +12,16 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 public abstract class Pessoa {
 
+	/*
+	 * Declarando chave primaria e informando que a estrategia de geracao fica por
+	 * conta da base de dados
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;	
+	private Integer id;
 	private String nome;
-	
+
+	/* Anotacao para faz auto validacao dos numeros do CPF */
 	@CPF
 	private String cpf;
 	private String telefone;
@@ -25,7 +30,6 @@ public abstract class Pessoa {
 	}
 
 	public Pessoa(Integer id, String nome, String cpf, String telefone) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;

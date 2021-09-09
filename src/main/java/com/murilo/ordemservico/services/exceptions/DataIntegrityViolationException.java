@@ -1,5 +1,8 @@
 package com.murilo.ordemservico.services.exceptions;
 
+/* 
+ * Tratamento de excecoes para violacao de integridade de dados. Exemplo: duplicidade de CPF...
+ */
 public class DataIntegrityViolationException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

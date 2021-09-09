@@ -29,11 +29,15 @@ public class OrdemServico {
 	private Integer prioridade;
 	private String observacoes;
 	private Integer status;
-	
+
+	/*
+	 * Anotacao declarando que esse atributo faz juncao de Muitos para Um com outra
+	 * tabela com o nome tecnico_id
+	 */
 	@ManyToOne
 	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -46,7 +50,6 @@ public class OrdemServico {
 
 	public OrdemServico(Integer id, Prioridade prioridade, String observacoes, Status status, Tecnico tecnico,
 			Cliente cliente) {
-		super();
 		this.id = id;
 		this.setDataAbertura(LocalDateTime.now());
 		this.prioridade = (prioridade == null) ? 0 : prioridade.getCod();
